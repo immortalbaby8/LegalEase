@@ -1,12 +1,69 @@
 import streamlit as st
 import requests
+import io
+from fpdf import FPDF
+from docx import Document
+from docx.shared import Inches
+
+
+ 
+
+
+def format_docx(text, document_type, raw_terms):
+    doc = Document()
+    try:
+        doc.add_picture("Image/Logo.jpg", width=Inches(2))
+    except Exception:
+        pass 
+        
+    doc.add_heading(document_type, 0)
+
+    for line in text.split("\n"):
+        doc.add_paragraph(line)
+        
+    
+    if raw_terms:
+        doc.add_heading("Key Terms", level=2)
+        table = doc.add_table(rows=0, cols=1)
+        table.style = 'Table Grid' 
+        
+        term_list = raw_terms.split(";")
+        for term in term_list:
+            if term.strip():
+                row_cells = table.add_row().cells
+                row_cells[0].text = term.strip()
+                
+    bio = io.BytesIO()
+    doc.save(bio)
+    return bio.getvalue()
+
+class BrandedPDF(FPDF):
+    def header(self):
+        self.image("Image/Logo.jpg",x=85,y=8,w=40)
+        self.ln(20)
+
+    def footer(self):
+        self.set_y(-15)
+        self.set_font("Arial",'I',8)
+        self.cell(0,10,"LegalEase INC.| Contact@legalease.com | All Rights Reserved",align='C')
+
+def format_pdf(text,document_type):
+    pdf=BrandedPDF()
+    pdf.add_page()
+    pdf.set_font("Arial",'B',16)
+    pdf.cell(0,10,txt=document_type,ln=True,align= 'C')
+
+    pdf.set_font("Arial",size = 12)
+    clean_text=text.encode('latin-1','replace').decode('latin-1')
+    pdf.multi_cell(0,8,txt=clean_text)
+    return pdf.output(dest='S').encode('latin-1')
 
 st.set_page_config(page_title="LegalEase", layout="centered")
 
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     
-    st.image("Image/logo.png", use_container_width=True)
+    st.image("Image/Logo.jpg", use_container_width=True)
 
 st.markdown("<h2 style='text-align: center;'>AI Legal Document Generator</h2>", unsafe_allow_html=True)
 
@@ -29,7 +86,7 @@ if st.button("Generate Document"):
         }
                 
         try:
-            response = requests.post("http://localhost:8000/generate", json=payload)
+            response = requests.post("http://backend:8000/generate", json=payload)
                 
             if response.status_code == 200:                    
                 
@@ -45,9 +102,33 @@ if st.button("Generate Document"):
 if st.session_state.generated_text:
     edited_text = st.text_area("Edit Document Below:", st.session_state.generated_text, height=300)
         
-    st.download_button(
-        label="Download as .TXT",
-        data=edited_text,
-        file_name="legal_document.txt",
-        mime="text/plain"
-    )
+   
+
+    btn1,btn2,btn3=st.columns(3)
+    with btn1:
+        st.download_button(
+                label="Download as .TXT",
+                data=edited_text,
+                file_name="legal_document.txt",
+                mime="text/plain"
+            )
+        
+
+    with btn2:
+        st.download_button(
+            
+            label="Download as .DOCX",
+            data = format_docx(edited_text, document_type, terms),
+            file_name="legal_document.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
+
+    with btn3:
+        st.download_button(
+                    
+            label="Download as .PDF",
+            data=format_pdf(edited_text, document_type),
+            file_name="legal_document.pdf",
+            mime="application/pdf"
+        )
+    

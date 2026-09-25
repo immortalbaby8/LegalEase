@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from aicore.gemini_generator import GeminiDocumentGenerator
 
 router = APIRouter()
-generator = GeminiDocumentGenerator(model_name="gemini-3.1-flash-lite")
+generator = GeminiDocumentGenerator()
 
 class DocumentRequest(BaseModel):
     document_type: str
