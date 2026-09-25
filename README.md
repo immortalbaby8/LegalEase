@@ -48,7 +48,7 @@ Step-by-Step Deployment
 Clone the Repository:
 
 Bash
-git clone [https://github.com/your-username/LegalEase.git](https://github.com/your-username/LegalEase.git)
+git clone https://github.com/immortalbaby8/LegalEase.git
 cd LegalEase
 Configure Environment Variables:
 Create a file named .env in the root directory of the project and add your Gemini API key:
