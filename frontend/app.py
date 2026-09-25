@@ -40,7 +40,7 @@ def format_docx(text, document_type, raw_terms):
 class BrandedPDF(FPDF):
     def header(self):
         self.image("Image/Logo.jpg",x=85,y=8,w=40)
-        self.ln(20)
+        self.ln(35)
 
     def footer(self):
         self.set_y(-15)
