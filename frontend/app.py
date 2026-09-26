@@ -106,12 +106,16 @@ if st.button("Generate Document"):
 if st.session_state.generated_text:
     edited_text = st.text_area("Edit Document Below:", st.session_state.generated_text, height=300)
     
+    # Clean the document_type string to make it safe for a filename (e.g., "Non-Disclosure Agreement" -> "Non-Disclosure_Agreement")
+    safe_title = "".join(c if c.isalnum() or c in (' ', '_', '-') else '' for c in document_type).strip()
+    safe_title = safe_title.replace(" ", "_") or "legal_document"
+
     btn1, btn2, btn3 = st.columns(3)
     with btn1:
         st.download_button(
             label="Download as .TXT",
             data=edited_text,
-            file_name="legal_document.txt",
+            file_name=f"{safe_title}.txt",  
             mime="text/plain"
         )
 
@@ -119,7 +123,7 @@ if st.session_state.generated_text:
         st.download_button(
             label="Download as .DOCX",
             data=format_docx(edited_text, document_type, terms),
-            file_name="legal_document.docx",
+            file_name=f"{safe_title}.docx",  
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
 
@@ -127,6 +131,6 @@ if st.session_state.generated_text:
         st.download_button(
             label="Download as .PDF",
             data=format_pdf(edited_text, document_type),
-            file_name="legal_document.pdf",
+            file_name=f"{safe_title}.pdf",    
             mime="application/pdf"
         )
