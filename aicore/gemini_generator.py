@@ -2,11 +2,20 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 class GeminiDocumentGenerator:
     def __init__(self, model_name="gemini-3.1-flash-lite"):
-        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+       
+        api_key = os.environ.get("GEMINI_API_KEY")
+        
+        
+        if api_key:
+            genai.configure(api_key=api_key)
+        else:
+            print("WARNING: GEMINI_API_KEY is missing from environment variables!")
+            
         self.model = genai.GenerativeModel(model_name)
         
     def generate_document(self, document_type, parties, terms, dates):
