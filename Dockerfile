@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "legalEaseAPI.routes:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "legalEaseAPI.main:app", "--host", "0.0.0.0", "--port", "8000"]
