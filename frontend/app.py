@@ -114,11 +114,12 @@ if st.session_state.generated_text:
     btn1, btn2, btn3 = st.columns(3)
     
     with btn1:
-        
+        # Wrap the icon in a styled HTML container with a white background 
+        # so transparent/dark logos never blend into dark mode
         st.markdown(
             """
             <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
-                <img src="Image/txt.png" width="30">
+                <img src="app/static/Image/txt.png" width="30">
             </div>
             """, 
             unsafe_allow_html=True
@@ -134,7 +135,7 @@ if st.session_state.generated_text:
         st.markdown(
             """
             <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
-                <img src="Image/docx.png" width="30">
+                <img src="app/static/Image/docx.png" width="30">
             </div>
             """, 
             unsafe_allow_html=True
@@ -150,7 +151,7 @@ if st.session_state.generated_text:
         st.markdown(
             """
             <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
-                <img src="Image/pdf.png" width="30">
+                <img src="app/static/Image/pdf.png" width="30">
             </div>
             """, 
             unsafe_allow_html=True
