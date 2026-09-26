@@ -112,8 +112,8 @@ if st.session_state.generated_text:
 
     btn1, btn2, btn3 = st.columns(3)
     with btn1:
+        st.image("Image/txt.png", width=20)
         st.download_button(
-            st.image("Image/txt.png", width=20),
             label="Download as .TXT",
             data=edited_text,
             file_name=f"{safe_title}.txt",  
@@ -121,17 +121,17 @@ if st.session_state.generated_text:
         )
 
     with btn2:
+        st.image("Image/docx.png", width=20)
         st.download_button(
-            st.image("Image/docx.png", width=20),
             label="Download as .DOCX",
             data=format_docx(edited_text, document_type, terms),
             file_name=f"{safe_title}.docx",  
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
+        )   
 
     with btn3:
+        st.image("Image/pdf.png", width=20)
         st.download_button(
-            st.image("Image/pdf.png", width=20),
             label="Download as .PDF",
             data=format_pdf(edited_text, document_type),
             file_name=f"{safe_title}.pdf",    
