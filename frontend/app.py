@@ -104,6 +104,7 @@ if st.button("Generate Document"):
             st.error("Could not connect to backend. Is FastAPI running?")
 
 if st.session_state.generated_text:
+
     edited_text = st.text_area("Edit Document Below:", st.session_state.generated_text, height=300)
     
     # Clean the document_type string to make it safe for a filename (e.g., "Non-Disclosure Agreement" -> "Non-Disclosure_Agreement")
@@ -111,29 +112,52 @@ if st.session_state.generated_text:
     safe_title = safe_title.replace(" ", "_") or "legal_document"
 
     btn1, btn2, btn3 = st.columns(3)
+    
     with btn1:
-        st.image("Image/txt.png", width=20)
+        
+        st.markdown(
+            """
+            <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
+                <img src="Image/txt.png" width="30">
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
         st.download_button(
-            label="Download as .TXT",
+            label="Download .TXT",
             data=edited_text,
-            file_name=f"{safe_title}.txt",  
+            file_name=f"{safe_title}.txt",
             mime="text/plain"
         )
 
     with btn2:
-        st.image("Image/docx.png", width=20)
+        st.markdown(
+            """
+            <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
+                <img src="Image/docx.png" width="30">
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
         st.download_button(
-            label="Download as .DOCX",
+            label="Download .DOCX",
             data=format_docx(edited_text, document_type, terms),
-            file_name=f"{safe_title}.docx",  
+            file_name=f"{safe_title}.docx",
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )   
+        )
 
     with btn3:
-        st.image("Image/pdf.png", width=20)
+        st.markdown(
+            """
+            <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
+                <img src="Image/pdf.png" width="30">
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
         st.download_button(
-            label="Download as .PDF",
+            label="Download .PDF",
             data=format_pdf(edited_text, document_type),
-            file_name=f"{safe_title}.pdf",    
+            file_name=f"{safe_title}.pdf",
             mime="application/pdf"
         )
