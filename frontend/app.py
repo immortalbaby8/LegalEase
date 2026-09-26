@@ -114,16 +114,7 @@ if st.session_state.generated_text:
     btn1, btn2, btn3 = st.columns(3)
     
     with btn1:
-        # Wrap the icon in a styled HTML container with a white background 
-        # so transparent/dark logos never blend into dark mode
-        st.markdown(
-            """
-            <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
-                <img src="app/static/Image/txt.png" width="30">
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
+
         st.download_button(
             label="Download .TXT",
             data=edited_text,
@@ -132,14 +123,7 @@ if st.session_state.generated_text:
         )
 
     with btn2:
-        st.markdown(
-            """
-            <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
-                <img src="app/static/Image/docx.png" width="30">
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
+       
         st.download_button(
             label="Download .DOCX",
             data=format_docx(edited_text, document_type, terms),
@@ -148,14 +132,6 @@ if st.session_state.generated_text:
         )
 
     with btn3:
-        st.markdown(
-            """
-            <div style="background-color: white; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 5px;">
-                <img src="app/static/Image/pdf.png" width="30">
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
         st.download_button(
             label="Download .PDF",
             data=format_pdf(edited_text, document_type),
