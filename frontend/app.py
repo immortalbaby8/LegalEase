@@ -70,7 +70,7 @@ with col2:
 
 st.markdown("<h2 style='text-align: center;'>AI Legal Document Generator</h2>", unsafe_allow_html=True)
 
-document_type = st.text_input("Document Type")
+document_type = st.text_input("Document Type (Ex: Agreement, Contract, NDA)")
 parties = st.text_area("Parties Involved") 
 terms = st.text_area("Terms and Conditions")
 dates = st.text_input("Effective Dates")
