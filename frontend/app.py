@@ -6,9 +6,7 @@ from docx import Document
 from docx.shared import Inches
 import streamlit as st
 
-
 BACKEND_URL = os.environ.get("BACKEND_URL", "http://backend:8000/generate")
-
 
 def format_docx(text, document_type, raw_terms):
     doc = Document()
@@ -37,7 +35,6 @@ def format_docx(text, document_type, raw_terms):
     doc.save(bio)
     return bio.getvalue()
 
-
 class BrandedPDF(FPDF):
     def header(self):
         try:
@@ -51,7 +48,6 @@ class BrandedPDF(FPDF):
         self.set_font("Arial", 'I', 8)
         self.cell(0, 10, "LegalEase INC. | Contact@legalease.com | All Rights Reserved", align='C')
 
-
 def format_pdf(text, document_type):
     pdf = BrandedPDF()
     pdf.add_page()
@@ -62,7 +58,6 @@ def format_pdf(text, document_type):
     clean_text = text.encode('latin-1', 'replace').decode('latin-1')
     pdf.multi_cell(0, 8, txt=clean_text)
     return pdf.output(dest='S').encode('latin-1')
-
 
 st.set_page_config(page_title="LegalEase", layout="centered")
 
@@ -84,6 +79,9 @@ if "generated_text" not in st.session_state:
     st.session_state.generated_text = ""    
 
 if st.button("Generate Document"):
+    # NEW: Added warning message for the free-tier server wake-up time
+    st.info("💡 Note: The first document may take up to 60 seconds to generate while the secure server wakes up. Thanks for your patience!")
+    
     with st.spinner("Drafting your legal document..."):                
         payload = {
             "document_type": document_type,
