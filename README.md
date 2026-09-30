@@ -3,6 +3,8 @@
 **LegalEase** is a containerized microservice application that leverages Google’s Gemini AI to dynamically draft professional legal documents based on user specifications. It features a responsive web interface built with Streamlit, a robust FastAPI backend, and multi-format export capabilities (TXT, Branded PDF, and DOCX with automated tables).
 
 ---
+Live Demo - https://legalease-nncxnfare7vhb4mm4e5hpb.streamlit.app/
+---
 
 ## 🏗️ Architecture & Tech Stack
 
